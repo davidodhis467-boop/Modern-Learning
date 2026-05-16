@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Learning</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --primary: #2f65f4;
+      --primary-soft: rgba(47, 101, 244, 0.14);
+      --text: #243142;
+      --muted: #6b7a92;
+      --success: #2eb86e;
+      --border: #dbe2ef;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #eef4ff 0%, #f8fbff 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 48px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 0;
+    }
+
+    .brand {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 40px;
+      padding: 48px 0 32px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 3.2vw, 4rem);
+      margin: 0 0 18px;
+      letter-spacing: -0.05em;
+      color: var(--text);
+    }
+
+    .hero p {
+      max-width: 640px;
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .hero .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .button,
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 22px;
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .button:hover,
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 32px rgba(47, 101, 244, 0.16);
+    }
+
+    .hero .hero-image {
+      padding: 28px;
+      background: radial-gradient(circle at top left, rgba(47, 101, 244, 0.16), transparent 35%), #ffffff;
+      border-radius: 32px;
+      box-shadow: 0 26px 70px rgba(111, 128, 164, 0.12);
+    }
+
+    .hero .hero-card {
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-card .stat {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: #f8fbff;
+      border: 1px solid rgba(47, 101, 244, 0.08);
+    }
+
+    .hero-card .stat strong {
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    .section {
+      margin-top: 36px;
+      padding: 36px 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    .feature-card,
+    .panel,
+    .message-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 16px 40px rgba(71, 90, 133, 0.06);
+    }
+
+    .feature-card h3 {
+      margin-top: 0;
+      font-size: 1.15rem;
+    }
+
+    .feature-card p,
+    .panel p,
+    .message-card p {
+      margin: 12px 0 0;
+      color: var(--muted);
+    }
+
+    form {
+      display: grid;
+      gap: 18px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      min-height: 46px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #fcfdff;
+      font: inherit;
+      color: var(--text);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .file-label {
+      background: #f7faff;
+      border: 1px dashed #cfd9ed;
+      padding: 16px;
+      border-radius: 16px;
+      text-align: center;
+      color: var(--muted);
+      transition: border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .file-label:hover {
+      border-color: var(--primary);
+      background: #eef4ff;
+    }
+
+    .file-label input {
+      display: none;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: -8px;
+    }
+
+    .success {
+      border-color: var(--success);
+      background: #f0fbf4;
+      color: #166a33;
+    }
+
+    .message-panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .message-controls {
+      display: grid;
+      gap: 14px;
+    }
+
+    .message-list {
+      display: grid;
+      gap: 16px;
+      max-height: 360px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .message-card.sent {
+      border-left: 4px solid var(--primary);
+    }
+
+    .message-card.received {
+      border-left: 4px solid #6b7a92;
+    }
+
+    .message-card time {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    footer {
+      margin-top: 36px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">Modern Learning</div>
+      <nav class="nav">
+        <a href="#admission">Admission</a>
+        <a href="#messaging">Messages</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <p style="color: var(--primary); font-weight: 700; margin:0 0 16px; text-transform: uppercase; letter-spacing: 0.16em;">Online admission made easy</p>
+        <h1>Welcome to Modern Learning – simplify admission, account setup, and parent communication.</h1>
+        <p>New learners can register online, submit admission requirements, and connect with our school through a secure messaging portal for parents and guardians.</p>
+        <div class="hero-actions">
+          <a class="button" href="#admission">Start Admission</a>
+          <a class="button" href="#messaging" style="background: #edf3ff; color: var(--primary);">Open Messaging</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-card">
+          <div class="stat">
+            <div>
+              <strong>100% digital process</strong>
+              <p style="margin: 8px 0 0; color: var(--muted);">Complete admission steps from home.</p>
+            </div>
+            <span>🏫</span>
+          </div>
+          <div class="stat">
+            <div>
+              <strong>Parent messaging</strong>
+              <p style="margin: 8px 0 0; color: var(--muted);">Confirm notices and stay connected.</p>
+            </div>
+            <span>💬</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="admission" class="section">
+      <div class="section-title">
+        <h2>Admission & Account Setup</h2>
+      </div>
+      <div class="grid" style="grid-template-columns: 1.2fr 0.8fr;">
+        <div class="panel">
+          <h3>New learner admission form</h3>
+          <p>Fill in your details, upload required documents, and set up your account. All fields are designed for easy online submission.</p>
+          <form id="admission-form">
+            <div class="form-row">
+              <div class="field">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Learner full name" required />
+              </div>
+              <div class="field">
+                <label for="email">Email address</label>
+                <input type="email" id="email" name="email" placeholder="learner@example.com" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Create a password" required />
+              </div>
+              <div class="field">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repeat password" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                  <option value="">Select gender</option>
+                  <option>Female</option>
+                  <option>Male</option>
+                  <option>Non-binary</option>
+                  <option>Prefer not to say</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="ethnicGroup">Ethnic Group</label>
+                <input type="text" id="ethnicGroup" name="ethnicGroup" placeholder="e.g. Luo, Kikuyu, Kalenjin" required />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field">
+                <label for="religion">Religion</label>
+                <input type="text" id="religion" name="religion" placeholder="e.g. Christian, Muslim, Other" required />
+              </div>
+              <div class="field">
+                <label for="hobby">Hobby</label>
+                <input type="text" id="hobby" name="hobby" placeholder="e.g. football, reading" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="guardianName">Parent / Guardian Name</label>
+              <input type="text" id="guardianName" name="guardianName" placeholder="Parent or guardian full name" required />
+            </div>
+
+            <div class="field">
+              <label for="guardianContact">Parent / Guardian Contact</label>
+              <input type="tel" id="guardianContact" name="guardianContact" placeholder="Phone or WhatsApp number" required />
+            </div>
+
+            <div class="field">
+              <label for="feeSlip">First term fee payment slip number</label>
+              <input type="text" id="feeSlip" name="feeSlip" placeholder="Payment slip number" required />
+              <span class="note">Supply the payment reference your guardian used for first-term fees.</span>
+            </div>
+
+            <div class="field">
+              <label class="file-label" for="recommendationLetter">
+                <span>Upload recommendation letter from previous school</span>
+                <input type="file" id="recommendationLetter" name="recommendationLetter" accept="application/pdf,image/*" />
+              </label>
+              <span class="note">PDF or image accepted. This requirement is from primary or private academy.</span>
+            </div>
+
+            <div class="field">
+              <label class="file-label" for="resultsSlip">
+                <span>Upload results slip from previous academic level</span>
+                <input type="file" id="resultsSlip" name="resultsSlip" accept="application/pdf,image/*" />
+              </label>
+              <span class="note">Upload your latest academic results slip.</span>
+            </div>
+
+            <button type="submit">Submit Admission Request</button>
+            <div id="form-message" class="note" style="display:none; margin-top:0;"></div>
+          </form>
+        </div>
+
+        <div class="feature-card">
+          <h3>Admission requirements</h3>
+          <p>Be ready with the documents and details required for a smooth online admission.</p>
+          <ul style="margin: 20px 0 0; padding-left: 20px; color: var(--muted);">
+            <li>Recommendation letter from previous stage</li>
+            <li>Results slip from the previous academic level</li>
+            <li>First term fee payment slip number</li>
+            <li>Parent / guardian contact details</li>
+          </ul>
+          <div style="margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <div style="background: #eef4ff; padding: 16px; border-radius: 18px; flex:1; min-width: 200px;">
+              <strong>Secure</strong>
+              <p style="margin: 8px 0 0;">No paper forms needed.</p>
+            </div>
+            <div style="background: #f0fbf4; padding: 16px; border-radius: 18px; flex:1; min-width: 200px;">
+              <strong>Connected</strong>
+              <p style="margin: 8px 0 0;">School and parents communicate directly.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="messaging" class="section">
+      <div class="section-title">
+        <h2>Messaging portal</h2>
+      </div>
+      <div class="message-panel">
+        <div class="panel">
+          <h3>Parent & School communication</h3>
+          <p>Use this portal to send confirmations, ask questions, or receive school announcements safely.</p>
+        </div>
+        <div class="panel">
+          <div class="message-controls">
+            <div class="field">
+              <label for="messageRole">Your role</label>
+              <select id="messageRole">
+                <option value="parent">Parent / Guardian</option>
+                <option value="school">School Admin</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="messageText">Write a message</label>
+              <textarea id="messageText" placeholder="Type your message here..."></textarea>
+            </div>
+            <button id="sendMessageBtn">Send message</button>
+            <div id="message-status" class="note" style="display:none;"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>Recent conversation</h3>
+          <div class="message-list" id="messageList">
+            <div class="message-card received">
+              <strong>School:</strong>
+              <p>Welcome to Modern Learning. Please confirm submission of admission documents.</p>
+              <time>System message</time>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer id="contact">
+      <p>Modern Learning · Online Admission · Parent Communication Portal</p>
+    </footer>
+  </div>
+
+  <script>
+    const form = document.getElementById('admission-form');
+    const messageDiv = document.getElementById('form-message');
+    const messageList = document.getElementById('messageList');
+    const sendButton = document.getElementById('sendMessageBtn');
+    const messageText = document.getElementById('messageText');
+    const messageRole = document.getElementById('messageRole');
+    const messageStatus = document.getElementById('message-status');
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        showFormMessage('Passwords do not match. Please review and try again.', false);
+        return;
+      }
+
+      messageDiv.textContent = 'Thank you! Your admission request has been submitted successfully. A school administrator will contact your guardian soon.';
+      messageDiv.className = 'note success';
+      messageDiv.style.display = 'block';
+      form.reset();
+    });
+
+    function showFormMessage(text, success) {
+      messageDiv.textContent = text;
+      messageDiv.className = 'note' + (success ? ' success' : '');
+      messageDiv.style.display = 'block';
+    }
+
+    sendButton.addEventListener('click', () => {
+      const text = messageText.value.trim();
+      const role = messageRole.value;
+      if (!text) {
+        showMessageStatus('Please type a message before sending.', false);
+        return;
+      }
+
+      const card = document.createElement('div');
+      card.className = 'message-card ' + (role === 'parent' ? 'sent' : 'received');
+      card.innerHTML = `
+        <strong>${role === 'parent' ? 'Parent / Guardian' : 'School'}:</strong>
+        <p>${text}</p>
+        <time>${new Date().toLocaleString()}</time>
+      `;
+      messageList.prepend(card);
+      messageText.value = '';
+      showMessageStatus('Message sent successfully.', true);
+    });
+
+    function showMessageStatus(text, success) {
+      messageStatus.textContent = text;
+      messageStatus.style.color = success ? '#166a33' : '#b33a3a';
+      messageStatus.style.display = 'block';
+      setTimeout(() => {
+        messageStatus.style.display = 'none';
+      }, 4200);
+    }
+  </script>
+</body>
+</html>
